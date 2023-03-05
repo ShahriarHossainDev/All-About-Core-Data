@@ -34,7 +34,7 @@ class DataViewController: UIViewController {
     
     // MARK: - Function
     
-    
+    // 2 data Tabel Relation Ship 
     func fetchRelationShip() {
         let family = Family(context: context)
         family.name = "Hossain"
