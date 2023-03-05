@@ -68,6 +68,8 @@ class DataViewController: UIViewController {
 
                 }
                 
+                // Re-fetch data
+                self.fetchPeople()
                 
             }
         }
@@ -108,11 +110,22 @@ extension DataViewController: UITableViewDelegate, UITableViewDataSource {
         let person = self.items![indexPath.row]
         
         let alertController = UIAlertController(title: "Edit Person", message: "Edit Person Info...!", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "Add", style: .default) { (_) in
+        let confirmAction = UIAlertAction(title: "Save", style: .default) { (_) in
             if let txtField = alertController.textFields?.first, let text = txtField.text {
+                // Updata data
+                person.name = text
                 
-                // operations
-                print("Text==>" + text)
+                
+                // Save Data
+                
+                do {
+                    try self.context.save()
+                } catch {
+
+                }
+                
+                // Re-fetch data
+                self.fetchPeople()
             }
             
         }
@@ -126,6 +139,30 @@ extension DataViewController: UITableViewDelegate, UITableViewDataSource {
         
         self.present(alertController, animated: true, completion: nil)
         
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        // Swipe action
+        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
+            //Object
+            let personTORemove = self.items![indexPath.row]
+            
+            // Delete
+            self.context.delete(personTORemove)
+            
+            // Save Data
+            do {
+                try self.context.save()
+            } catch {
+                
+            }
+            
+            self.fetchPeople()
+            
+        }
+        
+        return UISwipeActionsConfiguration(actions: [action])
     }
     
 }

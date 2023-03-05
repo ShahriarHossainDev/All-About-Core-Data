@@ -34,7 +34,7 @@ class DataTableViewCell: UITableViewCell {
     
     func configurateTheCell(_ person: Person) {
         nameLabel.text = person.name
-        genderLabel.text = "Gender: \(String(describing: person.gender))"
+        genderLabel.text = "Gender: \(person.gender ?? "")"
         ageLabel.text = "Age: \(person.age)"
     }
 
