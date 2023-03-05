@@ -15,6 +15,7 @@
 		FA0A615D29B451F5007B8770 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA0A615B29B451F5007B8770 /* LaunchScreen.storyboard */; };
 		FA0A616929B45780007B8770 /* DataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A616829B45780007B8770 /* DataTableViewCell.swift */; };
 		FA0A616B29B45814007B8770 /* DataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A616A29B45814007B8770 /* DataViewController.swift */; };
+		FA0A616E29B45ADB007B8770 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A616D29B45ADB007B8770 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		FA0A615E29B451F5007B8770 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA0A616829B45780007B8770 /* DataTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTableViewCell.swift; sourceTree = "<group>"; };
 		FA0A616A29B45814007B8770 /* DataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataViewController.swift; sourceTree = "<group>"; };
+		FA0A616D29B45ADB007B8770 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 		FA0A614C29B451F4007B8770 /* All About Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				FA0A616C29B45AC6007B8770 /* Utils */,
 				FA0A616629B45289007B8770 /* ViewModel */,
 				FA0A616529B45280007B8770 /* Model */,
 				FA0A616429B45278007B8770 /* View */,
@@ -103,6 +106,14 @@
 				FA0A616829B45780007B8770 /* DataTableViewCell.swift */,
 			);
 			path = "Cell View";
+			sourceTree = "<group>";
+		};
+		FA0A616C29B45AC6007B8770 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				FA0A616D29B45ADB007B8770 /* Constants.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,6 +192,7 @@
 				FA0A614E29B451F4007B8770 /* AppDelegate.swift in Sources */,
 				FA0A616B29B45814007B8770 /* DataViewController.swift in Sources */,
 				FA0A615029B451F4007B8770 /* SceneDelegate.swift in Sources */,
+				FA0A616E29B45ADB007B8770 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

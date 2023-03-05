@@ -39,7 +39,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gender: Female" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yNf-vV-YhW">
                                                             <rect key="frame" x="10" y="50" width="120" height="20"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="120" id="XTk-HY-E13"/>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="XTk-HY-E13"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="NotoSansOriya" family="Noto Sans Oriya" pointSize="14"/>
                                                             <color key="textColor" red="0.0" green="0.1176470588" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -48,7 +48,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Age: 100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NW4-nt-Skd">
                                                             <rect key="frame" x="264" y="50" width="100" height="20"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="100" id="j3C-V1-VZa"/>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="j3C-V1-VZa"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="NotoSansOriya" family="Noto Sans Oriya" pointSize="14"/>
                                                             <color key="textColor" red="0.0" green="0.1176470588" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -64,6 +64,7 @@
                                                         <constraint firstItem="6v8-WF-4e1" firstAttribute="leading" secondItem="yjZ-8U-QyD" secondAttribute="leading" constant="10" id="EcB-m9-42Q"/>
                                                         <constraint firstItem="NW4-nt-Skd" firstAttribute="top" secondItem="6v8-WF-4e1" secondAttribute="bottom" constant="8" id="JBP-13-Jvn"/>
                                                         <constraint firstItem="yNf-vV-YhW" firstAttribute="leading" secondItem="yjZ-8U-QyD" secondAttribute="leading" constant="10" id="MDb-B4-bPR"/>
+                                                        <constraint firstItem="NW4-nt-Skd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="yNf-vV-YhW" secondAttribute="trailing" constant="8" symbolic="YES" id="eB6-tX-Bt8"/>
                                                         <constraint firstAttribute="trailing" secondItem="6v8-WF-4e1" secondAttribute="trailing" constant="10" id="foF-lm-kVr"/>
                                                         <constraint firstAttribute="trailing" secondItem="NW4-nt-Skd" secondAttribute="trailing" constant="10" id="qqP-U7-2o7"/>
                                                         <constraint firstItem="6v8-WF-4e1" firstAttribute="top" secondItem="yjZ-8U-QyD" secondAttribute="top" constant="10" id="uGv-do-XU6"/>
@@ -97,7 +98,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Quick Start" id="F3C-7c-jpE">
-                        <barButtonItem key="rightBarButtonItem" image="plus.app" catalog="system" id="mZc-U4-bIW"/>
+                        <barButtonItem key="rightBarButtonItem" image="plus.app" catalog="system" id="mZc-U4-bIW">
+                            <connections>
+                                <action selector="addButtonAction:" destination="BYZ-38-t0r" id="6J0-26-Pp9"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="dataTableView" destination="806-4A-YQt" id="ff5-8F-p2m"/>
