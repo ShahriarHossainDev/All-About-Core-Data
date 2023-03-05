@@ -13,6 +13,7 @@ class DataViewController: UIViewController {
     private let cellIdentifier: String = "cell"
     
     @IBOutlet weak var dataTableView: UITableView!
+    @IBOutlet weak var nameSearchBar: UISearchBar!
     
     // Reference NS Managed Object Context
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -33,13 +34,48 @@ class DataViewController: UIViewController {
     
     // MARK: - Function
     
+    
+    func fetchRelationShip() {
+        let family = Family(context: context)
+        family.name = "Hossain"
+        
+        let person = Person(context: context)
+        person.name = "Atik"
+        
+        family.addToPeople(person)
+        
+        //
+        try! context.save()
+    }
+    
     func fetchPeople() {
         do {
-            self.items = try context.fetch(Person.fetchRequest())
             
-            DispatchQueue.main.async {
-                self.dataTableView.reloadData()
+            let request = Person.fetchRequest() as NSFetchRequest<Person>
+            let nameSearch = nameSearchBar.text
+            
+            if nameSearch == "" {
+                //Sorting
+                let sort = NSSortDescriptor(key: "name", ascending: true)
+                request.sortDescriptors = [sort]
+                
+                self.items = try context.fetch(request)
+                
+                DispatchQueue.main.async {
+                    self.dataTableView.reloadData()
+                }
+            } else {
+                // Filtering
+                let pred = NSPredicate(format: "name CONTAINS '%@'", nameSearch!)
+                request.predicate = pred
+                
+                self.items = try context.fetch(request)
+                
+                DispatchQueue.main.async {
+                    self.dataTableView.reloadData()
+                }
             }
+            
         } catch {
             print("Error")
         }
@@ -47,42 +83,57 @@ class DataViewController: UIViewController {
     }
     
     
+    
     @IBAction func addButtonAction(_ sender: UIBarButtonItem) {
         
-        let alertController = UIAlertController(title: "Add New Person", message: "Enter Person Info...!", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "Add", style: .default) { (_) in
-            if let txtField = alertController.textFields?.first, let text = txtField.text {
-                // operations
-                
-                // Create Object
+        let actionController = UIAlertController(title: "Add New Person", message : "Enter Person Info...!", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
+            if actionController.textFields![0].text == "" {
+                print("Enter Name")    // You refuse OK
+            } else {
+                print("OK")     // Do whatever you need: update tableView
+            }
+            if actionController.textFields![1].text == "" {
+                print("Enter Gender")     // You refuse OK
+            } else {
                 let newPerson = Person(context: self.context)
-                newPerson.name = text
-                newPerson.gender = "Male"
-                newPerson.age = 24
+                newPerson.name = actionController.textFields![0].text
+                newPerson.gender = actionController.textFields![1].text
+                newPerson.age = Int16(actionController.textFields![2].text!) ?? 24
                 
                 // Save Data
                 
                 do {
                     try self.context.save()
                 } catch {
-
+                    
                 }
                 
                 // Re-fetch data
-                self.fetchPeople()
-                
+                self.fetchPeople()  // Do whatever you need:  update tableView
             }
-        }
+            
+        } )
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
         
-        alertController.addTextField { (textField) in
-            textField.placeholder = "Person Name"
-        }
-        alertController.addAction(confirmAction)
-        alertController.addAction(cancelAction)
+        actionController.addAction(okAction)
+        actionController.addAction(cancelAction)
         
-        self.present(alertController, animated: true, completion: nil)
+        
+        actionController.addTextField { textField -> Void in
+            textField.placeholder = "Enter Name..."
+        }
+        
+        actionController.addTextField { textField -> Void in
+            textField.placeholder = "Enter Gender..."
+        }
+        
+        actionController.addTextField { textField -> Void in
+            textField.placeholder = "Enter Age..."
+        }
+        
+        self.present(actionController, animated: true, completion: nil)
     }
     
     
@@ -109,35 +160,53 @@ extension DataViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let person = self.items![indexPath.row]
         
-        let alertController = UIAlertController(title: "Edit Person", message: "Edit Person Info...!", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "Save", style: .default) { (_) in
-            if let txtField = alertController.textFields?.first, let text = txtField.text {
-                // Updata data
-                person.name = text
-                
+        let actionController = UIAlertController(title: "Edit Person", message : "Enter Person Info...!", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Save", style: .default, handler: { (action) -> Void in
+            if actionController.textFields![0].text == "" {
+                print("Enter Name")    // You refuse OK
+            } else {
+                print("OK")     // Do whatever you need: update tableView
+            }
+            if actionController.textFields![1].text == "" {
+                print("Enter Gender")     // You refuse OK
+            } else {
+                //let newPerson = Person(context: self.context)
+                person.name = actionController.textFields![0].text
+                person.gender = actionController.textFields![1].text
+                person.age = Int16(actionController.textFields![2].text!) ?? 24
                 
                 // Save Data
                 
                 do {
                     try self.context.save()
                 } catch {
-
+                    
                 }
                 
                 // Re-fetch data
-                self.fetchPeople()
+                self.fetchPeople()  // Do whatever you need:  update tableView
             }
             
-        }
+        } )
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
         
-        alertController.addTextField { (textField) in
+        actionController.addAction(okAction)
+        actionController.addAction(cancelAction)
+        
+        actionController.addTextField { textField -> Void in
             textField.text = person.name
         }
-        alertController.addAction(confirmAction)
-        alertController.addAction(cancelAction)
         
-        self.present(alertController, animated: true, completion: nil)
+        actionController.addTextField { textField -> Void in
+            textField.text = person.gender
+        }
+        
+        actionController.addTextField { textField -> Void in
+            textField.text = "\(person.age)"
+        }
+        
+        self.present(actionController, animated: true, completion: nil)
         
     }
     
